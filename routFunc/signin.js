@@ -1,4 +1,5 @@
 const DB = require('../config/database')
+const jwt = require('jsonwebtoken');
 
 const Signin = (req, res) => {
    
@@ -16,10 +17,32 @@ const Signin = (req, res) => {
            
             else if(result.length > 0){  
                     if(password === result[0].password){
+                    // res.status(200).json({
+                    //     message:"login success"
+                    // })
+                    // console.log(result[0]);
+
+                    //generate token
+                    const user = {
+                        token:"Bearer",
+                        id: result[0].id,
+                        email: result[0].email,
+                        name: result[0].name
+                        };
+                    const token = jwt.sign(user, "process.env.TOKEN_SECRET",{expiresIn: '1h'});
+                    
+
+                   
+                    
+
+                    console.log(token);
                     res.status(200).json({
+                        token: token,
                         message:"login success"
-                    })
-                    console.log(result[0]);
+                        });
+
+
+
                 }
                 else{
                     res.status(400).json({
