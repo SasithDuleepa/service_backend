@@ -1,12 +1,14 @@
 const DB = require('../config/database')
 const jwt = require('jsonwebtoken');
 
+require('dotenv').config();
+
 const Signin = (req, res) => {
    
     const { email, password } = req.body;
 
     if(email){
-        console.log(email);
+        // console.log(email);
         var sql = "SELECT * FROM users WHERE email = '"+email+"'";
         DB.connection.query(sql, function (err, result) {
             if(result.length === 0){
@@ -29,15 +31,16 @@ const Signin = (req, res) => {
                         email: result[0].email,
                         name: result[0].name
                         };
-                    const token = jwt.sign(user, "process.env.TOKEN_SECRET",{expiresIn: '1h'});
+                    const token = jwt.sign(user, process.env.TOKEN_SECRET,{expiresIn: '1h'});
                     
 
                    
                     
 
-                    console.log(token);
+                    // console.log(token);
                     res.status(200).json({
                         token: token,
+                        name: result[0].name,
                         message:"login success"
                         });
 
