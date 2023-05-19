@@ -15,8 +15,10 @@ const Imgsave = async(req,res)=>{
     const sql = "INSERT INTO item (image,post_id) VALUES ('"+image+"','"+postid+"')";
     DB.connection.query(sql, (err, result) => {
         if(result){
-            res.send(result);
-            console.log(result);
+            res.status(200).json({
+                message: "Image saved successfully"
+                });
+            
         }else{
             res.send("image save failed")
             console.log(err);

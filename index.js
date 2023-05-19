@@ -17,6 +17,7 @@ const itemRouter = require('./routers/itemRouter');//item routs
 const authMiddleware = require('./auth/middleware');
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
