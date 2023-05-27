@@ -1,4 +1,4 @@
-const DB = require('../config/database');
+const DB = require('../../config/database');
 const express = require('express');
 const router = express.Router();
 
@@ -18,46 +18,30 @@ const Signup = async(req,res)=>{
                 res.status(400).json({
                     message: "user already exists"
                     });
-                }
-            
-            else{
+                }else{
                 console.log('user does not exist');
                 const Sql = "INSERT INTO users (name,email,password) VALUES ('"+name+"','"+email+"','"+password+"')";
                 DB.connection.query(Sql, (err,result)=>{
                     if(result){
                         console.log('user created successfully');
                         res.status(200).json({
-                            
                             message: "user created successfully"
                             });
                     }else{
                         console.log('user creation failed');
                         res.status(400).json({
-                            
                             message: "user creation failed"
                             });
-                    }
-                    
+                    }                    
                 });
             }
-
         });
-        
-        
-    
-    }
-
-    else{
+    }else{
         res.status(400).json({
             message: "please fill all the fields"
             });
         console.log('please fill all the fields');
     }
-    
-
 }
-
-    
-
 
 module.exports = Signup;

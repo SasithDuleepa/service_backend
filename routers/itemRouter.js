@@ -1,50 +1,42 @@
 const express = require('express');
-// const SaveImg = require('../routFunc/ItemFunc/SaveImg');
+const  path = require('path');
+const multer = require('multer');
+
 const SaveItem = require('../routFunc/ItemFunc/SaveItem');
-const Imgsave = require('../routFunc/ItemFunc/Imgsave');
 const GetItem = require('../routFunc/ItemFunc/GetItem');
 const GetAll = require('../routFunc/ItemFunc/GetAll');
 const LatestPosts = require('../routFunc/ItemFunc/latest_posts');
-const ImageName = require('../routFunc/ItemFunc/GetImgName')
 const GetRandom = require('../routFunc/ItemFunc/GetRandom');
-const  path = require('path');
+const Item = require('../routFunc/ItemFunc/Item');
+const Catergorylist = require('../routFunc/ItemFunc/GetCatergorylist');
 
-const multer = require('multer');
+const Upload = require('../config/multer')  //multer config
 
-//multer config
-const storage = multer.diskStorage({
-    destination: function(req,file,cb){
-        cb(null,'./uploads/items');
-    },
-    filename: function(req,file,cb){
-        cb(null,`${file.fieldname}-${Date.now()}-${file.originalname}`);}
-        
-});
-
-const upload = multer({storage:storage});
 
 const router = express.Router();
 
-//save a new image
-router.post('/save',upload.array("images"),Imgsave ); 
-
-//save new item
-router.post('/new',upload.array("images"),SaveItem );
-
-//get post image names
-router.post('/ImgName', ImageName)
+//save new post
+router.post('/new',Upload.array("images"),SaveItem );
 
 //get an image
 router.use(express.static(path.join((__dirname, "uploads/items"))));
 
+//get an image
 router.post('/img', GetItem);
 
-//get all items
-
+//get all posts
 router.post('/all',GetAll );
 
+//get latest posts
 router.get('/latest',LatestPosts );
 
+//get random posts
 router.get('/random',GetRandom );
+
+//used to review a post
+router.get('/item',Item );
+
+//catergory list
+router.get('/catergorylist', Catergorylist)
 
 module.exports = router;

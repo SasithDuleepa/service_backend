@@ -1,4 +1,4 @@
-const DB = require('../config/database')
+const DB = require('../../config/database')
 const jwt = require('jsonwebtoken');
 
 require('dotenv').config();
@@ -41,6 +41,7 @@ const Signin = (req, res) => {
                     res.status(200).json({
                         token: token,
                         name: result[0].name,
+                        id:result[0].id,
                         message:"login success"
                         });
 

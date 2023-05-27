@@ -9,7 +9,7 @@ const GetItem = require('./routFunc/ItemFunc/GetItem')
 
 require('dotenv').config();
 
-// const connection = require('./model/dbconnection')
+
 const DB = require('./config/database');
 const userRouter = require('./routers/userRouter');//user routs
 const itemRouter = require('./routers/itemRouter');//item routs
